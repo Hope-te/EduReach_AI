@@ -1,0 +1,808 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduReach AI - Student Dashboard</title>
+    <link rel="icon" type="image/png" href="icons/logo.png" />
+    <link rel="shortcut icon" href="/icons/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/logo.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist:wght@500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#004ac6" />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+
+      .filled-icon {
+        font-variation-settings: "FILL" 1;
+      }
+
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 1024px) {
+        .bento-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(229, 231, 235, 0.5);
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-secondary-container": "#00714d",
+              "on-tertiary-fixed-variant": "#653e00",
+              "surface-dim": "#d3daef",
+              primary: "#004ac6",
+              secondary: "#006c49",
+              "inverse-on-surface": "#edf0ff",
+              "surface-variant": "#dce2f7",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed": "#002113",
+              "surface-container-low": "#f1f3ff",
+              "error-container": "#ffdad6",
+              background: "#f9f9ff",
+              tertiary: "#784b00",
+              "surface-container": "#e9edff",
+              "secondary-container": "#6cf8bb",
+              "inverse-primary": "#b4c5ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#dce2f7",
+              "on-background": "#141b2b",
+              "on-tertiary-container": "#ffeedd",
+              "inverse-surface": "#293040",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-secondary-fixed-variant": "#005236",
+              "tertiary-fixed-dim": "#ffb95f",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#0053db",
+              surface: "#f9f9ff",
+              "tertiary-fixed": "#ffddb8",
+              error: "#ba1a1a",
+              "primary-container": "#2563eb",
+              outline: "#737686",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-primary-container": "#eeefff",
+              "on-tertiary-fixed": "#2a1700",
+              "secondary-fixed": "#6ffbbe",
+              "surface-bright": "#f9f9ff",
+              "on-error-container": "#93000a",
+              "on-surface": "#141b2b",
+              "on-surface-variant": "#434655",
+              "tertiary-container": "#996100",
+              "on-primary-fixed": "#00174b",
+              "primary-fixed": "#dbe1ff",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c3c6d7",
+              "surface-container-high": "#e1e8fd",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-desktop": "2.5rem",
+              xs: "0.5rem",
+              gutter: "1.5rem",
+              lg: "2rem",
+              md: "1.5rem",
+              base: "4px",
+              "margin-mobile": "1rem",
+              xl: "3rem",
+              sm: "1rem",
+            },
+            fontFamily: {
+              "headline-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "label-md": ["Geist"],
+              "headline-md": ["Inter"],
+              "label-sm": ["Geist"],
+              "display-lg": ["Inter"],
+              "headline-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "500",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("Service Worker Registered"));
+    }
+  </script>
+
+  <body class="bg-surface text-on-surface font-body-md min-h-screen">
+    <!-- Top AppBar (Desktop & Tablet) -->
+    <header
+      class="fixed top-0 w-full z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full"
+    >
+      <div class="flex items-center gap-4">
+        <div
+          class="lg:hidden p-2 rounded-full hover:bg-surface-container transition-colors cursor-pointer"
+          onclick="toggleMobileMenu()"
+        >
+          <span class="material-symbols-outlined">menu</span>
+        </div>
+        <h1
+          class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim"
+        >
+          EduReach AI
+        </h1>
+      </div>
+      <div class="flex items-center gap-6">
+        <div
+          class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-secondary-container rounded-full text-on-secondary-container border border-secondary/20"
+        >
+          <span class="material-symbols-outlined text-[18px]">offline_pin</span>
+          <span class="font-label-md text-label-md">Offline Mode Active</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            class="p-2 rounded-full hover:bg-surface-container transition-colors"
+          >
+            <span class="material-symbols-outlined" data-icon="search"
+              >search</span
+            >
+          </button>
+          <div
+            class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-primary/20"
+          >
+            <img
+              alt="Student Profile"
+              class="w-full h-full object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOPx10MCjkvgJkde-porLRFWDwZkHSYrgIOAO36ADs7A-itPDbd4zbS164azZln_znj43FUqtUugI667szrgY9NXRu78x2JSMbVBWMYDAl_9llf40L9bJIjzqgfOEEVLX20HUGGrpeMhX_JX6Na7SeF8g8jLhTgqfKPhcyD4ZFN43S6Zlx12Y3t4yYANJq7Ag7eHvpfMscTdXD3LECiGyhiOb4r6Odox-9xV4JCGRQJbvcciiAAYljlhTNkrEkXBuw865AP0kyOz2Y"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Sidebar (Desktop) -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[280px] hidden lg:block bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline shadow-md dark:shadow-none z-40 overflow-y-auto"
+    >
+      <div class="flex flex-col p-4 gap-2 pt-20">
+        <div class="p-4 mb-4 bg-white/50 rounded-2xl">
+          <div class="flex items-center gap-3 mb-2">
+            <div
+              class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container"
+            >
+              <span class="material-symbols-outlined font-bold">person</span>
+            </div>
+            <div>
+              <p class="font-headline-md text-label-md text-primary font-bold">
+                Amina Okon
+              </p>
+              <p class="text-on-surface-variant text-label-sm">
+                Secondary Level • Nigeria
+              </p>
+            </div>
+          </div>
+          <div class="h-1 bg-surface-container rounded-full overflow-hidden">
+            <div
+              class="h-full w-3/4 bg-primary transition-all duration-1000"
+              style="width: 75%"
+            ></div>
+          </div>
+          <p class="text-[10px] mt-1 text-on-surface-variant font-medium">
+            TERM PROGRESS: 75%
+          </p>
+        </div>
+        <nav class="flex flex-col gap-1">
+          <a
+            class="flex items-center gap-4 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-4 py-3 border-l-4 border-primary transition-all duration-200 ease-in-out"
+            href="student_dashboard.html"
+          >
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-label-md text-label-md">Dashboard</span>
+          </a>
+          <a
+            class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out"
+            href="my_courses.html"
+          >
+            <span class="material-symbols-outlined">school</span>
+            <span class="font-label-md text-label-md">My Courses</span>
+          </a>
+          <a
+            class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out"
+            href="ai_tutor.html"
+          >
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span class="font-label-md text-label-md">AI Tutor</span>
+          </a>
+          <a
+            class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out"
+            href="offline_library.html"
+          >
+            <span class="material-symbols-outlined">download_done</span>
+            <span class="font-label-md text-label-md">Offline Library</span>
+          </a>
+          <a
+            class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out"
+            href="settings.html"
+          >
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-label-md text-label-md">Settings</span>
+          </a>
+        </nav>
+        <div class="mt-auto pt-8">
+          <div class="bg-primary/5 p-4 rounded-xl border border-primary/10">
+            <p
+              class="text-label-sm font-bold text-primary mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-[16px]"
+                >verified</span
+              >
+              EDU-REACH PLUS
+            </p>
+            <p class="text-label-sm text-on-surface-variant leading-tight">
+              Your AI features are active and synced.
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main
+      class="lg:pl-[300px] pt-20 pb-24 lg:pb-8 px-4 md:px-10 max-w-[1440px] mx-auto"
+    >
+      <!-- Welcome Header -->
+      <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+      >
+        <div>
+          <p
+            class="text-primary font-bold uppercase tracking-widest text-[12px] mb-1"
+          >
+            DASHBOARD OVERVIEW
+          </p>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+            Welcome back, Amina! 👋
+          </h2>
+          <p class="text-on-surface-variant mt-1">
+            You've mastered 4 new concepts this week. Keep going!
+          </p>
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-outline-variant flex items-center gap-4"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-secondary/10 text-secondary flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined filled-icon"
+                >local_fire_department</span
+              >
+            </div>
+            <div>
+              <p class="font-bold text-headline-md leading-none">7 Days</p>
+              <p class="text-label-sm text-on-surface-variant">
+                Learning Streak
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Bento Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <!-- Overall Progress Widget (Large) -->
+        <div
+          class="md:col-span-8 bg-white p-6 rounded-3xl shadow-sm border border-outline-variant relative overflow-hidden flex flex-col md:flex-row gap-8 items-center"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full"
+          ></div>
+          <div class="relative w-48 h-48">
+            <svg
+              class="w-full h-full transform -rotate-90"
+              viewbox="0 0 100 100"
+            >
+              <circle
+                class="text-surface-container"
+                cx="50"
+                cy="50"
+                fill="transparent"
+                r="40"
+                stroke="currentColor"
+                stroke-width="10"
+              ></circle>
+              <circle
+                class="text-primary"
+                cx="50"
+                cy="50"
+                fill="transparent"
+                r="40"
+                stroke="currentColor"
+                stroke-dasharray="251.2"
+                stroke-dashoffset="62.8"
+                stroke-linecap="round"
+                stroke-width="10"
+              ></circle>
+            </svg>
+            <div
+              class="absolute inset-0 flex flex-col items-center justify-center"
+            >
+              <span class="text-display-lg font-display-lg text-primary"
+                >75%</span
+              >
+              <span
+                class="text-label-sm text-on-surface-variant uppercase tracking-tighter"
+                >Syllabus</span
+              >
+            </div>
+          </div>
+          <div class="flex-1 space-y-4">
+            <div>
+              <h3 class="font-headline-md text-headline-md text-on-surface">
+                Weekly Analytics
+              </h3>
+              <p class="text-on-surface-variant">
+                Your performance is 12% higher than last week.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-3 bg-surface rounded-xl">
+                <p class="text-label-sm text-on-surface-variant">Avg. Score</p>
+                <p class="font-bold text-headline-md">88%</p>
+              </div>
+              <div class="p-3 bg-surface rounded-xl">
+                <p class="text-label-sm text-on-surface-variant">Study Time</p>
+                <p class="font-bold text-headline-md">14.5h</p>
+              </div>
+            </div>
+            <button
+              class="w-full md:w-auto px-6 py-3 bg-primary text-on-primary rounded-xl font-bold shadow-sm active:scale-95 transition-transform"
+            >
+              View Detailed Report
+            </button>
+          </div>
+        </div>
+        <!-- Quiz Alert Widget (Small) -->
+        <div
+          class="md:col-span-4 bg-tertiary-container text-on-tertiary-container p-6 rounded-3xl shadow-sm flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <span class="material-symbols-outlined text-[32px]">timer</span>
+              <span class="bg-white/20 px-2 py-1 rounded text-label-sm"
+                >UPCOMING</span
+              >
+            </div>
+            <h3 class="font-headline-md text-headline-md mb-2">
+              Math Quiz: Calculus I
+            </h3>
+            <p class="opacity-90 text-sm">
+              Scheduled for tomorrow at 10:00 AM. 15 questions covering
+              derivatives.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center justify-between">
+            <span class="font-bold">24h 12m left</span>
+            <button
+              class="bg-on-tertiary-container text-tertiary-container px-4 py-2 rounded-xl font-bold text-label-md"
+            >
+              Set Reminder
+            </button>
+          </div>
+        </div>
+        <!-- Current Courses Section -->
+        <div class="md:col-span-12">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-headline-md text-headline-md">In Progress</h3>
+            <a class="text-primary font-bold text-label-md" href="#"
+              >View All Courses</a
+            >
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Math Course -->
+            <div
+              class="bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-md transition-shadow group"
+            >
+              <div class="h-32 bg-primary relative">
+                <img
+                  alt="Advanced Mathematics"
+                  class="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform"
+                  data-alt="A professional close-up of a chalkboard covered in complex mathematical equations and geometric diagrams, shot with shallow depth of field and soft natural lighting to create an academic and intellectual mood. The color palette is dominated by charcoal grays, crisp whites, and subtle primary blue accents, echoing a refined educational design aesthetic."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5GgiYDU-BIX1KwPVTqLYVevPtr2NW_KBHWUrOzoobMlJfnsLpFe84DuIXNM5T83RaJHKS_qZH3cHxWssuuLLlSuqdPcZy9e2ccdfGX1EIiHRenkd7IyshPnPWojjVjkoLJC8NhlNkEzdMKDuffi-Z8P_bfO29Q4LIAmuIGmuH841gK8NETJkgyCMAWUusiqrD7CF8e2_poUh0x-gcEx9fIHQ7x4_DO-3zxlV5Xt3MEMZTcoh8jAONH99fJNZNhc4VyXaTDsfWplEC"
+                />
+                <div
+                  class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >cloud_done</span
+                  >
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-label-sm text-primary uppercase font-bold mb-1">
+                  Science & Math
+                </p>
+                <h4 class="font-bold text-lg mb-3">Calculus & Geometry</h4>
+                <div
+                  class="flex items-center justify-between text-label-sm mb-2"
+                >
+                  <span class="text-on-surface-variant">Module 4 of 12</span>
+                  <span class="text-primary font-bold">33%</span>
+                </div>
+                <div class="h-1.5 w-full bg-surface-container rounded-full">
+                  <div
+                    class="h-full bg-primary rounded-full"
+                    style="width: 33%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <!-- Physics Course -->
+            <div
+              class="bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant hover:shadow-md transition-shadow group"
+            >
+              <div class="h-32 bg-secondary relative">
+                <img
+                  alt="Physics Principles"
+                  class="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform"
+                  data-alt="An abstract visualization of subatomic particles and force fields in motion, rendered with elegant glowing lines and glowing points of light. The atmosphere is technological and scientific, using a palette of deep navy blues, electric teals, and soft emerald greens. The lighting is low-key with vibrant luminous accents, conveying the intelligence and mystery of modern physics research."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk73zyDiMvZj1Zmvco8ViCwyruZa3lw8kF88sp5CGO_UCkVVh5x_8W7Pg6YcoJf2EDxSbH3h86p46ynMkoHrK55Q_WgnA9rkVeTGiWXWYdHZqxh4sOGw8s_n1piY5Q0x1tABSYb2SNfEfRPr4mC7HBb8yA2QZzhd_p6o-XBfPh5UMu0PzxzYZ4sF9RFWiFPOCLIwcwNLgWsPI3_nIh8qQwnAPRx2XCWXZy1rURhtI7NSBr8ohSDKG8_nm-CBm8vqPEkYtwKAqLBGul"
+                />
+                <div
+                  class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >cloud_done</span
+                  >
+                </div>
+              </div>
+              <div class="p-4">
+                <p
+                  class="text-label-sm text-secondary uppercase font-bold mb-1"
+                >
+                  Physics
+                </p>
+                <h4 class="font-bold text-lg mb-3">Thermodynamics</h4>
+                <div
+                  class="flex items-center justify-between text-label-sm mb-2"
+                >
+                  <span class="text-on-surface-variant">Module 8 of 10</span>
+                  <span class="text-secondary font-bold">80%</span>
+                </div>
+                <div class="h-1.5 w-full bg-surface-container rounded-full">
+                  <div
+                    class="h-full bg-secondary rounded-full"
+                    style="width: 80%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <!-- AI Tutor Recommendation -->
+            <div
+              class="bg-primary text-on-primary rounded-2xl p-6 shadow-xl flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+            >
+              <div
+                class="absolute -bottom-4 -right-4 opacity-20 transform group-hover:scale-110 transition-transform"
+              >
+                <span class="material-symbols-outlined text-[120px]"
+                  >smart_toy</span
+                >
+              </div>
+              <div>
+                <span
+                  class="bg-white/20 text-white px-2 py-1 rounded text-[10px] uppercase font-bold"
+                  >AI Recommended</span
+                >
+                <h4 class="font-bold text-xl mt-3 leading-tight">
+                  Mastering Logic with AI
+                </h4>
+                <p class="text-on-primary/80 text-sm mt-2">
+                  Personalized session based on your last quiz results.
+                </p>
+              </div>
+              <div class="mt-6 flex items-center gap-2 font-bold">
+                Start Session
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </div>
+            </div>
+            <!-- Downloaded Library Placeholder -->
+            <div
+              class="bg-surface-container-high rounded-2xl p-6 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-3"
+              >
+                <span class="material-symbols-outlined text-on-surface-variant"
+                  >add</span
+                >
+              </div>
+              <p class="font-bold text-on-surface">Add New Course</p>
+              <p class="text-label-sm text-on-surface-variant">
+                Browse the library
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Recommended Lessons & Offline Library -->
+        <div class="md:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Recommended Lessons -->
+          <div class="bg-white p-6 rounded-3xl border border-outline-variant">
+            <h3 class="font-headline-md text-headline-md mb-6">
+              Recommended Lessons
+            </h3>
+            <div class="space-y-4">
+              <div
+                class="flex items-center gap-4 p-3 rounded-2xl hover:bg-surface-container transition-colors cursor-pointer group"
+              >
+                <div
+                  class="w-14 h-14 rounded-xl bg-surface-container-highest flex items-center justify-center overflow-hidden"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >play_circle</span
+                  >
+                </div>
+                <div class="flex-1">
+                  <h5
+                    class="font-bold group-hover:text-primary transition-colors"
+                  >
+                    Intro to Quantum Mechanics
+                  </h5>
+                  <p class="text-label-sm text-on-surface-variant">
+                    15 mins • Physics 101
+                  </p>
+                </div>
+                <span class="material-symbols-outlined text-on-surface-variant"
+                  >chevron_right</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-4 p-3 rounded-2xl hover:bg-surface-container transition-colors cursor-pointer group"
+              >
+                <div
+                  class="w-14 h-14 rounded-xl bg-surface-container-highest flex items-center justify-center overflow-hidden"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >description</span
+                  >
+                </div>
+                <div class="flex-1">
+                  <h5
+                    class="font-bold group-hover:text-primary transition-colors"
+                  >
+                    Logarithms Simplified
+                  </h5>
+                  <p class="text-label-sm text-on-surface-variant">
+                    8 mins • Advanced Math
+                  </p>
+                </div>
+                <span class="material-symbols-outlined text-on-surface-variant"
+                  >chevron_right</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Offline Library & Downloads -->
+          <div class="bg-white p-6 rounded-3xl border border-outline-variant">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="font-headline-md text-headline-md">Offline Library</h3>
+              <span
+                class="text-label-sm bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-bold"
+                >4.2 GB Free</span
+              >
+            </div>
+            <div class="space-y-3">
+              <div
+                class="flex items-center justify-between p-4 bg-surface rounded-2xl"
+              >
+                <div class="flex items-center gap-4">
+                  <span class="material-symbols-outlined text-secondary"
+                    >cloud_done</span
+                  >
+                  <div>
+                    <p class="font-bold text-sm">Calculus Complete Guide</p>
+                    <p class="text-[10px] text-on-surface-variant">
+                      256MB • Cached
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant cursor-pointer"
+                  >more_vert</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-surface rounded-2xl"
+              >
+                <div class="flex items-center gap-4">
+                  <span class="material-symbols-outlined text-secondary"
+                    >cloud_done</span
+                  >
+                  <div>
+                    <p class="font-bold text-sm">Physics Workbook Vol 1</p>
+                    <p class="text-[10px] text-on-surface-variant">
+                      120MB • Cached
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant cursor-pointer"
+                  >more_vert</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-surface rounded-2xl"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="relative">
+                    <svg class="w-6 h-6 transform -rotate-90">
+                      <circle
+                        class="text-surface-container"
+                        cx="12"
+                        cy="12"
+                        fill="transparent"
+                        r="8"
+                        stroke="currentColor"
+                        stroke-width="3"
+                      ></circle>
+                      <circle
+                        class="text-primary"
+                        cx="12"
+                        cy="12"
+                        fill="transparent"
+                        r="8"
+                        stroke="currentColor"
+                        stroke-dasharray="50"
+                        stroke-dashoffset="15"
+                        stroke-linecap="round"
+                        stroke-width="3"
+                      ></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-bold text-sm">AI Ethics Seminar</p>
+                    <p class="text-[10px] text-on-surface-variant">
+                      Downloading... 65%
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant cursor-pointer"
+                  >close</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Bottom Navigation Bar (Mobile Only) -->
+    <nav
+      class="fixed bottom-0 w-full z-50 lg:hidden bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-center h-16 px-2 pb-safe w-full"
+    >
+      <a
+        class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-3 py-1 active:scale-90 transition-transform"
+        href="#"
+      >
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label-sm text-label-sm">Home</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1 hover:bg-surface-variant dark:hover:bg-surface-container-highest active:scale-90 transition-transform"
+        href="#"
+      >
+        <span class="material-symbols-outlined">menu_book</span>
+        <span class="font-label-sm text-label-sm">Courses</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1 hover:bg-surface-variant dark:hover:bg-surface-container-highest active:scale-90 transition-transform"
+        href="#"
+      >
+        <span class="material-symbols-outlined">smart_toy</span>
+        <span class="font-label-sm text-label-sm">AI Tutor</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1 hover:bg-surface-variant dark:hover:bg-surface-container-highest active:scale-90 transition-transform"
+        href="#"
+      >
+        <span class="material-symbols-outlined">cloud_download</span>
+        <span class="font-label-sm text-label-sm">Downloads</span>
+      </a>
+    </nav>
+    <!-- Contextual FAB (Mobile) -->
+    <button
+      class="fixed bottom-20 right-4 lg:hidden w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40"
+    >
+      <span class="material-symbols-outlined text-[28px]">auto_awesome</span>
+    </button>
+    <script>
+      function toggleMobileMenu() {
+        // Simplified toggle for demonstration
+        console.log("Toggle navigation drawer");
+      }
+
+      // Add a micro-interaction for the progress circle
+      document.addEventListener("DOMContentLoaded", () => {
+        const circles = document.querySelectorAll("circle.text-primary");
+        circles.forEach((circle) => {
+          const dashArray = circle.getAttribute("stroke-dasharray");
+          if (dashArray) {
+            circle.style.transition = "stroke-dashoffset 2s ease-in-out";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,615 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduReach AI - AI Tutor</title>
+    <link rel="icon" type="image/png" href="icons/logo.png" />
+    <link rel="shortcut icon" href="/icons/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/logo.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#004ac6" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-secondary-container": "#00714d",
+              "on-tertiary-fixed-variant": "#653e00",
+              "surface-dim": "#d3daef",
+              primary: "#004ac6",
+              secondary: "#006c49",
+              "inverse-on-surface": "#edf0ff",
+              "surface-variant": "#dce2f7",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed": "#002113",
+              "surface-container-low": "#f1f3ff",
+              "error-container": "#ffdad6",
+              background: "#f9f9ff",
+              tertiary: "#784b00",
+              "surface-container": "#e9edff",
+              "secondary-container": "#6cf8bb",
+              "inverse-primary": "#b4c5ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#dce2f7",
+              "on-background": "#141b2b",
+              "on-tertiary-container": "#ffeedd",
+              "inverse-surface": "#293040",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-secondary-fixed-variant": "#005236",
+              "tertiary-fixed-dim": "#ffb95f",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#0053db",
+              surface: "#f9f9ff",
+              "tertiary-fixed": "#ffddb8",
+              error: "#ba1a1a",
+              "primary-container": "#2563eb",
+              outline: "#737686",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-primary-container": "#eeefff",
+              "on-tertiary-fixed": "#2a1700",
+              "secondary-fixed": "#6ffbbe",
+              "surface-bright": "#f9f9ff",
+              "on-error-container": "#93000a",
+              "on-surface": "#141b2b",
+              "on-surface-variant": "#434655",
+              "tertiary-container": "#996100",
+              "on-primary-fixed": "#00174b",
+              "primary-fixed": "#dbe1ff",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c3c6d7",
+              "surface-container-high": "#e1e8fd",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-desktop": "2.5rem",
+              xs: "0.5rem",
+              gutter: "1.5rem",
+              lg: "2rem",
+              md: "1.5rem",
+              base: "4px",
+              "margin-mobile": "1rem",
+              xl: "3rem",
+              sm: "1rem",
+            },
+            fontFamily: {
+              "headline-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "label-md": ["Geist"],
+              "headline-md": ["Inter"],
+              "label-sm": ["Geist"],
+              "display-lg": ["Inter"],
+              "headline-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "500",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .chat-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .chat-scroll::-webkit-scrollbar-thumb {
+        background: #c3c6d7;
+        border-radius: 10px;
+      }
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+      }
+      .tactile-btn {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      }
+      .tactile-btn:active {
+        transform: translateY(1px);
+        border-bottom-width: 0;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("Service Worker Registered"));
+    }
+  </script>
+  <body class="bg-background text-on-surface flex min-h-screen overflow-hidden">
+    <!-- Sidebar (Shared Component: NavigationDrawer) -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[280px] hidden lg:block bg-surface-container-low border-r border-outline-variant z-50 transition-all duration-200 ease-in-out"
+    >
+      <div class="flex flex-col p-4 gap-2 h-full">
+        <div class="mb-8 flex items-center gap-3 px-4">
+          <span class="material-symbols-outlined text-primary text-3xl">
+            school
+          </span>
+          <span
+            class="text-headline-md font-headline-md font-bold text-primary"
+          >
+            EduReach AI
+          </span>
+        </div>
+        <div
+          class="mb-8 px-4 py-4 bg-surface rounded-xl border border-outline-variant shadow-sm"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              alt="Student Profile"
+              class="w-10 h-10 rounded-full object-cover"
+              data-alt="A professional and friendly portrait of a young Nigerian student with a warm expression, set against a softly blurred library background. The lighting is natural and bright, reinforcing an educational and optimistic mood with a clean, high-key aesthetic consistent with a modern learning platform."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDO7xQ5CaxpR9vclkT6XGBnM3Z_4KFsHLA2H3DHk60cDgHuSoKkdQ3tUx-ZpC9JfrsHFAShuaOymnC0swqQ78hoDS6Aad3YK2ETML06RqgWAuxAyfgX4dF2Y4Q7Auw0LrqewyWTclkDTRunXHSON_nc2sT4IrgqF1rybDmlEF4sqiWn0dtrPLE0BYXJ0YmqmeKOHPn_P5BNCCptiTpMXfn7fW7JP17AZdBujao-G--wVg7IGCs6GKYEkB9NI8slU5WKEEqQh3y411B"
+            />
+            <div>
+              <p class="font-label-md text-label-md text-on-surface font-bold">
+                Amina Okon
+              </p>
+              <p class="text-xs text-on-surface-variant">Secondary Level</p>
+            </div>
+          </div>
+          <div
+            class="mt-3 flex items-center gap-1 text-[10px] text-secondary font-bold uppercase tracking-wider"
+          >
+            <span
+              class="material-symbols-outlined text-[12px]"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+            >
+              check_circle
+            </span>
+            Offline Mode Active
+          </div>
+        </div>
+        <nav class="space-y-1">
+            <a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors rounded-xl group" href="student_dashboard.html">
+                <span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors rounded-xl group" href="my_courses.html">
+                <span class="material-symbols-outlined group-hover:text-primary">school</span>
+                <span class="font-label-md text-label-md">My Courses</span>
+            </a>
+            <a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 border-l-4 border-primary" href="ai_tutor.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                <span class="font-label-md text-label-md font-bold">AI Tutor</span>
+            </a>
+            <a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors rounded-xl group" href="offline_library.html">
+                <span class="material-symbols-outlined group-hover:text-primary">download_done</span>
+                <span class="font-label-md text-label-md">Offline Library</span>
+            </a>
+            <a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors rounded-xl group mt-auto" href="settings.html">
+                <span class="material-symbols-outlined group-hover:text-primary">settings</span>
+                <span class="font-label-md text-label-md">Settings</span>
+            </a>
+        </nav>
+      </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main
+      class="flex-1 lg:ml-[280px] flex flex-col h-screen relative bg-background"
+    >
+      <!-- Top App Bar (Shared Component: TopAppBar) -->
+      <header
+        class="fixed top-0 w-full lg:w-[calc(100%-280px)] z-40 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16"
+      >
+        <div class="flex items-center gap-4">
+          <button
+            class="lg:hidden p-2 hover:bg-surface-container-high rounded-full"
+          >
+            <span class="material-symbols-outlined"> menu </span>
+          </button>
+          <div class="flex items-center gap-2">
+            <span
+              class="material-symbols-outlined text-secondary"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+            >
+              auto_awesome
+            </span>
+            <h1
+              class="font-headline-md text-headline-md font-bold text-primary"
+            >
+              AI Tutor
+            </h1>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex bg-surface-container rounded-full px-3 py-1 items-center gap-2 border border-outline-variant"
+          >
+            <select
+              class="bg-transparent border-none text-label-md font-label-md focus:ring-0 text-on-surface-variant"
+            >
+              <option>Mathematics</option>
+              <option>Physics</option>
+              <option>Chemistry</option>
+              <option>Biology</option>
+              <option>English</option>
+            </select>
+          </div>
+          <button
+            class="p-2 hover:bg-surface-container-high rounded-full transition-colors active:scale-95"
+          >
+            <span class="material-symbols-outlined"> search </span>
+          </button>
+        </div>
+      </header>
+      <!-- Chat Container -->
+      <div
+        class="flex-1 flex flex-col md:flex-row pt-16 pb-24 md:pb-0 overflow-hidden"
+      >
+        <!-- Chat Window -->
+        <div class="flex-1 flex flex-col relative">
+          <!-- Messages Area -->
+          <div class="flex-1 overflow-y-auto chat-scroll p-4 md:p-8 space-y-6">
+            <!-- AI Welcome -->
+            <div class="flex items-start gap-4 max-w-3xl">
+              <div
+                class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 shadow-sm border border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-on-secondary-container"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                >
+                  smart_toy
+                </span>
+              </div>
+              <div
+                class="bg-surface border border-outline-variant rounded-2xl rounded-tl-none p-4 shadow-sm"
+              >
+                <p
+                  class="font-body-md text-body-md text-on-surface leading-relaxed"
+                >
+                  Hello Amina! I'm your AI Tutor. I can help you understand
+                  complex topics, solve practice problems, or prepare for your
+                  exams. What are we studying today?
+                </p>
+                <div class="mt-4 flex gap-2 flex-wrap">
+                  <button
+                    class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-sm font-label-sm text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors"
+                  >
+                    Explain Pythagoras theorem
+                  </button>
+                  <button
+                    class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-sm font-label-sm text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors"
+                  >
+                    Laws of Thermodynamics
+                  </button>
+                  <button
+                    class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-sm font-label-sm text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors"
+                  >
+                    Solve a Quadratic Equation
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- User Message -->
+            <div
+              class="flex items-start gap-4 max-w-3xl ml-auto flex-row-reverse"
+            >
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-sm border border-outline-variant"
+              >
+                <img
+                  alt="User"
+                  class="w-full h-full object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Fz7UkxhxfyLkJ83Pj3ZBywCBoR7jSz2MO_kCpcI-D_8D66n1HuYen0fi4SPyS86G8AQEjHZ2bzqYQQVdjeP7CVDHGPvE_jE3KSMt7yDxi8aIx5Gx0UvRHfiVsyNZeGTsvooK8i9zMjbocd5Sm7m4LLVCw31snNUBfJXpR7ffJTt8Of6yJPLG7OQcWxgIE_3S6Rb4Q3IOcLsmyptbEnBT0welyJSmZtrxwkVJ7gQuumEsSHdkCN4hhlcMfRvARerJlWUWlQ95nipK"
+                />
+              </div>
+              <div
+                class="bg-primary text-on-primary rounded-2xl rounded-tr-none p-4 shadow-md"
+              >
+                <p class="font-body-md text-body-md leading-relaxed">
+                  Can you explain how the Pythagorean theorem works in real
+                  life?
+                </p>
+              </div>
+            </div>
+            <!-- AI Response -->
+            <div class="flex items-start gap-4 max-w-3xl">
+              <div
+                class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 shadow-sm border border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-on-secondary-container"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                >
+                  smart_toy
+                </span>
+              </div>
+              <div
+                class="bg-surface border border-outline-variant rounded-2xl rounded-tl-none p-4 shadow-sm"
+              >
+                <div class="flex items-center gap-2 mb-2 text-secondary">
+                  <span
+                    class="material-symbols-outlined text-[18px]"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                  >
+                    spark
+                  </span>
+                  <span
+                    class="text-label-sm font-label-sm uppercase tracking-wider"
+                  >
+                    AI Thinking...
+                  </span>
+                </div>
+                <p
+                  class="font-body-md text-body-md text-on-surface leading-relaxed"
+                >
+                  Great question! In real life, architects and construction
+                  workers use it to make sure buildings are square. For example,
+                  if you're building a wall, you can use the **3-4-5 rule**
+                  (which is a Pythagorean triple) to ensure the corner is
+                  exactly 90 degrees.
+                </p>
+                <div
+                  class="mt-4 p-4 bg-surface-container-high rounded-xl border border-outline-variant"
+                >
+                  <p class="text-label-sm font-bold text-primary mb-2">
+                    Visual Insight
+                  </p>
+                  <div
+                    class="h-32 w-full bg-surface-container-lowest rounded-lg border border-dashed border-outline flex items-center justify-center overflow-hidden"
+                  >
+                    <span class="z-10 text-on-surface-variant font-label-md">
+                      Interactive Geometry Widget
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Input Area -->
+          <div
+            class="p-4 md:p-8 bg-gradient-to-t from-background via-background to-transparent pt-12 absolute bottom-0 w-full"
+          >
+            <div
+              class="max-w-4xl mx-auto flex items-end gap-3 bg-surface border-2 border-outline-variant rounded-3xl p-2 shadow-lg focus-within:border-primary transition-all"
+            >
+              <button
+                class="p-3 text-on-surface-variant hover:text-primary transition-colors"
+              >
+                <span class="material-symbols-outlined"> attach_file </span>
+              </button>
+              <textarea
+                class="flex-1 bg-transparent border-none focus:ring-0 resize-none py-3 font-body-md text-body-md text-on-surface max-h-40"
+                placeholder="Ask me anything about your studies..."
+                rows="1"
+              ></textarea>
+              <div class="flex items-center gap-2 pr-2">
+                <button
+                  class="p-3 text-secondary-fixed-dim hover:bg-secondary-container hover:text-on-secondary-container rounded-full transition-all active:scale-90"
+                >
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                  >
+                    mic
+                  </span>
+                </button>
+                <button
+                  class="p-3 bg-primary text-on-primary rounded-2xl shadow-md hover:bg-primary-container transition-all active:scale-95 group"
+                >
+                  <span
+                    class="material-symbols-outlined group-hover:translate-x-1 transition-transform"
+                  >
+                    send
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right Sidebar / Panel -->
+        <aside
+          class="hidden xl:flex w-80 flex-col gap-6 p-8 border-l border-outline-variant bg-surface-container-lowest overflow-y-auto chat-scroll"
+        >
+          <div class="space-y-6">
+            <!-- Tools Card -->
+            <div
+              class="bg-surface border border-outline-variant rounded-2xl p-5 shadow-sm"
+            >
+              <h3
+                class="font-headline-md text-label-md font-bold text-on-surface mb-4"
+              >
+                Study Tools
+              </h3>
+              <button
+                class="w-full mb-3 flex items-center justify-center gap-3 bg-secondary text-on-secondary py-3 rounded-xl font-label-md tactile-btn hover:bg-on-secondary-fixed-variant transition-colors"
+              >
+                <span class="material-symbols-outlined"> quiz </span>
+                Generate Practice Quiz
+              </button>
+              <button
+                class="w-full flex items-center justify-center gap-3 bg-primary-container text-on-primary-container py-3 rounded-xl font-label-md tactile-btn hover:bg-primary transition-all"
+              >
+                <span class="material-symbols-outlined"> summarize </span>
+                Summarize Notes
+              </button>
+            </div>
+            <!-- Learning Tips -->
+            <div
+              class="bg-tertiary-fixed text-on-tertiary-fixed rounded-2xl p-5 shadow-sm border border-outline-variant"
+            >
+              <div class="flex items-center gap-2 mb-3">
+                <span class="material-symbols-outlined"> lightbulb </span>
+                <h3 class="font-label-md font-bold uppercase tracking-wide">
+                  Daily Tip
+                </h3>
+              </div>
+              <p class="text-sm italic leading-relaxed">
+                "Try the Pomodoro technique: 25 minutes of focused study
+                followed by a 5-minute break. Your brain retains info better in
+                chunks!"
+              </p>
+            </div>
+            <!-- Course Progress -->
+            <div
+              class="bg-surface border border-outline-variant rounded-2xl p-5 shadow-sm"
+            >
+              <h3 class="font-label-md font-bold text-on-surface mb-4">
+                Current Subject
+              </h3>
+              <div class="flex items-center gap-3 mb-4">
+                <div
+                  class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"
+                >
+                  <span class="material-symbols-outlined text-3xl">
+                    functions
+                  </span>
+                </div>
+                <div>
+                  <p class="font-label-md font-bold">Mathematics</p>
+                  <p class="text-xs text-on-surface-variant">
+                    Chapter 4: Geometry
+                  </p>
+                </div>
+              </div>
+              <div
+                class="w-full bg-surface-container-highest rounded-full h-2 mb-1"
+              >
+                <div
+                  class="bg-secondary h-full rounded-full"
+                  style="width: 65%"
+                ></div>
+              </div>
+              <div
+                class="flex justify-between text-[10px] font-bold text-on-surface-variant"
+              >
+                <span> 65% Complete </span>
+                <span> 12 Units left </span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <!-- Bottom Navigation Bar (Shared Component: BottomNavBar) -->
+      <nav
+        <nav class="fixed bottom-0 w-full z-50 lg:hidden bg-surface border-t border-outline-variant shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-center h-16 px-2 pb-safe">
+          <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="index.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="font-label-sm text-label-sm">Home</span>
+          </a>
+          <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="my_courses.html">
+            <span class="material-symbols-outlined">menu_book</span>
+            <span class="font-label-sm text-label-sm">Courses</span>
+          </a>
+          <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1" href="ai_tutor.html">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+            <span class="font-label-sm text-label-sm">AI Tutor</span>
+          </a>
+          <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1" href="offline_library.html">
+            <span class="material-symbols-outlined">cloud_download</span>
+            <span class="font-label-sm text-label-sm">Downloads</span>
+          </a>
+        </nav>
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+          >
+            smart_toy
+          </span>
+          <span class="font-label-sm text-label-sm"> AI Tutor </span>
+        </a>
+        <a
+          class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1"
+          href="#"
+        >
+          <span class="material-symbols-outlined"> cloud_download </span>
+          <span class="font-label-sm text-label-sm"> Downloads </span>
+        </a>
+      </nav>
+    </main>
+    <script>
+      // Micro-interaction for the chat input
+      const textarea = document.querySelector("textarea");
+      textarea.addEventListener("input", function () {
+        this.style.height = "auto";
+        this.style.height = this.scrollHeight + "px";
+      });
+
+      // Simple mock for "sending" a message
+      const sendBtn = document.querySelector("button.bg-primary");
+      sendBtn.addEventListener("click", () => {
+        if (textarea.value.trim() !== "") {
+          // Here we would normally handle the message addition logic
+          textarea.value = "";
+          textarea.style.height = "auto";
+        }
+      });
+    </script>
+  </body>
+</html>

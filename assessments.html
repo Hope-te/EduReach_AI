@@ -1,0 +1,818 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduReach AI - Quiz &amp; Assessments</title>
+    <link rel="icon" type="image/png" href="icons/logo.png" />
+    <link rel="shortcut icon" href="/icons/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/logo.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#004ac6" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-secondary-container": "#00714d",
+              "on-tertiary-fixed-variant": "#653e00",
+              "surface-dim": "#d3daef",
+              primary: "#004ac6",
+              secondary: "#006c49",
+              "inverse-on-surface": "#edf0ff",
+              "surface-variant": "#dce2f7",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed": "#002113",
+              "surface-container-low": "#f1f3ff",
+              "error-container": "#ffdad6",
+              background: "#f9f9ff",
+              tertiary: "#784b00",
+              "surface-container": "#e9edff",
+              "secondary-container": "#6cf8bb",
+              "inverse-primary": "#b4c5ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#dce2f7",
+              "on-background": "#141b2b",
+              "on-tertiary-container": "#ffeedd",
+              "inverse-surface": "#293040",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-secondary-fixed-variant": "#005236",
+              "tertiary-fixed-dim": "#ffb95f",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#0053db",
+              surface: "#f9f9ff",
+              "tertiary-fixed": "#ffddb8",
+              error: "#ba1a1a",
+              "primary-container": "#2563eb",
+              outline: "#737686",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-primary-container": "#eeefff",
+              "on-tertiary-fixed": "#2a1700",
+              "secondary-fixed": "#6ffbbe",
+              "surface-bright": "#f9f9ff",
+              "on-error-container": "#93000a",
+              "on-surface": "#141b2b",
+              "on-surface-variant": "#434655",
+              "tertiary-container": "#996100",
+              "on-primary-fixed": "#00174b",
+              "primary-fixed": "#dbe1ff",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c3c6d7",
+              "surface-container-high": "#e1e8fd",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-desktop": "2.5rem",
+              xs: "0.5rem",
+              gutter: "1.5rem",
+              lg: "2rem",
+              md: "1.5rem",
+              base: "4px",
+              "margin-mobile": "1rem",
+              xl: "3rem",
+              sm: "1rem",
+            },
+            fontFamily: {
+              "headline-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "label-md": ["Geist"],
+              "headline-md": ["Inter"],
+              "label-sm": ["Geist"],
+              "display-lg": ["Inter"],
+              "headline-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "500",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+      }
+
+      .test-grid-item {
+        aspect-ratio: 1 / 1;
+      }
+
+      .radar-chart-bg {
+        background: radial-gradient(
+          circle,
+          rgba(0, 74, 198, 0.05) 0%,
+          rgba(249, 249, 255, 1) 70%
+        );
+      }
+
+      .active-pill {
+        box-shadow: inset 0 0 0 2px #004ac6;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f3ff;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #c3c6d7;
+        border-radius: 10px;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("Service Worker Registered"));
+    }
+  </script>
+  <body
+    class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="fixed top-0 w-full z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop"
+    >
+      <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-primary text-3xl"
+          >school</span
+        >
+        <h1
+          class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim"
+        >
+          EduReach AI
+        </h1>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <nav class="flex gap-6">
+          <a
+            class="text-primary dark:text-primary-fixed-dim font-bold font-label-md"
+            href="#"
+            >Dashboard</a
+          >
+          <a
+            class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container transition-colors px-3 py-1 rounded-lg"
+            href="#"
+            >My Courses</a
+          >
+          <a
+            class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container transition-colors px-3 py-1 rounded-lg"
+            href="#"
+            >AI Tutor</a
+          >
+        </nav>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container transition-colors"
+        >
+          search
+        </button>
+        <div
+          class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold"
+        >
+          AO
+        </div>
+      </div>
+    </header>
+    <!-- Side Navigation (Desktop) -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[280px] hidden lg:block bg-surface-container-low border-r border-outline-variant pt-20 p-4"
+    >
+      <div class="flex flex-col gap-2">
+        <div
+          class="mb-6 p-4 bg-white rounded-2xl shadow-sm border border-outline-variant"
+        >
+          <p class="font-label-sm text-outline mb-1">CURRENT STUDENT</p>
+          <h3 class="font-headline-md text-primary">Amina Okon</h3>
+          <p class="text-sm text-on-surface-variant">JAMB Candidate 2024</p>
+        </div>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl"
+          href="student_dashboard.html"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-label-md">Dashboard</span>
+        </a>
+        <a
+          class="flex items-center gap-4 bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 border-l-4 border-primary transition-all"
+          href="assessments.html"
+        >
+          <span class="material-symbols-outlined">quiz</span>
+          <span class="font-label-md">Assessments</span>
+        </a>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl"
+          href="ai_tutor.html"
+        >
+          <span class="material-symbols-outlined">auto_awesome</span>
+          <span class="font-label-md">AI Tutor</span>
+        </a>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl"
+          href="offline_library.html"
+        >
+          <span class="material-symbols-outlined">download_done</span>
+          <span class="font-label-md">Offline Library</span>
+        </a>
+        <div class="mt-auto">
+          <a
+            class="flex items-center gap-4 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl"
+            href="settings.html"
+          >
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-label-md">Settings</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main
+      class="lg:ml-[280px] pt-24 pb-20 px-margin-mobile md:px-margin-desktop min-h-screen"
+    >
+      <!-- Section: Active Test Interface (Top Priority) -->
+      <section class="mb-xl" id="active-test">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center mb-lg gap-4"
+        >
+          <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-background">
+              JAMB Mock Test: Physics
+            </h2>
+            <p class="text-on-surface-variant flex items-center gap-2">
+              <span class="material-symbols-outlined text-sm">schedule</span>
+              Session ends in
+              <span class="font-bold text-primary" id="timer">01:45:22</span>
+            </p>
+          </div>
+          <button
+            class="bg-primary text-on-primary px-lg py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg hover:scale-105 transition-transform active:scale-95"
+            onclick="submitTest()"
+          >
+            Submit Test
+            <span class="material-symbols-outlined">send</span>
+          </button>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <!-- Question View -->
+          <div
+            class="lg:col-span-8 bg-white rounded-3xl p-lg border border-outline-variant shadow-sm min-h-[500px] flex flex-col"
+          >
+            <div
+              class="flex justify-between items-center mb-md pb-md border-b border-outline-variant"
+            >
+              <span
+                class="bg-surface-container text-primary px-4 py-1 rounded-full font-label-md"
+                >Question 14 of 40</span
+              >
+              <div class="flex gap-2">
+                <button
+                  class="material-symbols-outlined p-2 hover:bg-surface-container-high rounded-full transition-colors"
+                >
+                  flag
+                </button>
+                <button
+                  class="material-symbols-outlined p-2 hover:bg-surface-container-high rounded-full transition-colors"
+                >
+                  bookmark
+                </button>
+              </div>
+            </div>
+            <div class="flex-grow py-md">
+              <p class="text-headline-md font-medium mb-lg leading-relaxed">
+                A car starting from rest accelerates uniformly at 2 m/s² for 10
+                seconds. What is the total distance covered during this time?
+              </p>
+              <div class="space-y-4">
+                <label
+                  class="flex items-center gap-4 p-4 rounded-2xl border-2 border-outline-variant hover:border-primary cursor-pointer transition-all active-pill"
+                >
+                  <input
+                    class="w-5 h-5 text-primary focus:ring-primary border-outline-variant"
+                    name="q14"
+                    type="radio"
+                  />
+                  <span class="font-label-md">A. 50 meters</span>
+                </label>
+                <label
+                  class="flex items-center gap-4 p-4 rounded-2xl border-2 border-outline-variant hover:border-primary cursor-pointer transition-all"
+                >
+                  <input
+                    checked=""
+                    class="w-5 h-5 text-primary focus:ring-primary border-outline-variant"
+                    name="q14"
+                    type="radio"
+                  />
+                  <span class="font-label-md">B. 100 meters</span>
+                </label>
+                <label
+                  class="flex items-center gap-4 p-4 rounded-2xl border-2 border-outline-variant hover:border-primary cursor-pointer transition-all"
+                >
+                  <input
+                    class="w-5 h-5 text-primary focus:ring-primary border-outline-variant"
+                    name="q14"
+                    type="radio"
+                  />
+                  <span class="font-label-md">C. 200 meters</span>
+                </label>
+                <label
+                  class="flex items-center gap-4 p-4 rounded-2xl border-2 border-outline-variant hover:border-primary cursor-pointer transition-all"
+                >
+                  <input
+                    class="w-5 h-5 text-primary focus:ring-primary border-outline-variant"
+                    name="q14"
+                    type="radio"
+                  />
+                  <span class="font-label-md">D. 20 meters</span>
+                </label>
+              </div>
+            </div>
+            <div class="flex justify-between items-center mt-xl">
+              <button
+                class="flex items-center gap-2 text-primary font-bold px-4 py-2 rounded-lg hover:bg-surface-container transition-colors"
+              >
+                <span class="material-symbols-outlined">arrow_back</span>
+                Previous
+              </button>
+              <button
+                class="flex items-center gap-2 bg-primary-container text-on-primary-container font-bold px-lg py-2 rounded-lg hover:brightness-95 transition-all"
+              >
+                Next Question
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+          <!-- Navigation Grid -->
+          <div
+            class="lg:col-span-4 bg-surface-container-low rounded-3xl p-lg border border-outline-variant h-fit"
+          >
+            <h3 class="font-headline-md mb-md">Question Palette</h3>
+            <div
+              class="grid grid-cols-5 gap-2 custom-scrollbar max-h-[300px] overflow-y-auto pr-2"
+            >
+              <!-- Questions 1-40 -->
+              <script>
+                const active = 14;
+                const completed = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13];
+                const flagged = [8];
+                for (let i = 1; i <= 40; i++) {
+                  let style =
+                    "bg-white text-on-surface-variant border border-outline-variant";
+                  if (i === active)
+                    style =
+                      "bg-primary text-on-primary ring-4 ring-primary-container";
+                  else if (completed.includes(i))
+                    style =
+                      "bg-secondary-container text-on-secondary-container border-secondary";
+                  else if (flagged.includes(i))
+                    style =
+                      "bg-error-container text-on-error-container border-error";
+
+                  document.write(
+                    `<button class="test-grid-item rounded-xl flex items-center justify-center font-bold text-sm transition-all hover:scale-105 ${style}">${i}</button>`,
+                  );
+                }
+              </script>
+            </div>
+            <div class="mt-md space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded bg-secondary-container"></div>
+                Answered
+              </div>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-3 h-3 rounded bg-white border border-outline-variant"
+                ></div>
+                Not Visited
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded bg-error-container"></div>
+                Flagged for Review
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Section: Categories & Practice Hub -->
+      <section class="mb-xl">
+        <h2 class="font-headline-lg mb-lg">Select Exam Practice</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <!-- WAEC Practice -->
+          <div
+            class="group bg-white p-lg rounded-3xl border border-outline-variant hover:border-primary hover:shadow-xl transition-all cursor-pointer"
+          >
+            <div
+              class="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center mb-md group-hover:bg-primary-container transition-colors"
+            >
+              <span
+                class="material-symbols-outlined text-primary group-hover:text-on-primary-container"
+                >history_edu</span
+              >
+            </div>
+            <h3 class="font-headline-md mb-xs">WAEC Practice</h3>
+            <p class="text-on-surface-variant mb-lg">
+              Curated curriculum-based tests for West African Examination
+              Council standards.
+            </p>
+            <div class="flex items-center gap-2 text-primary font-bold">
+              Start Session
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+          <!-- NECO Practice -->
+          <div
+            class="group bg-white p-lg rounded-3xl border border-outline-variant hover:border-primary hover:shadow-xl transition-all cursor-pointer"
+          >
+            <div
+              class="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center mb-md group-hover:bg-primary-container transition-colors"
+            >
+              <span
+                class="material-symbols-outlined text-primary group-hover:text-on-primary-container"
+                >edit_square</span
+              >
+            </div>
+            <h3 class="font-headline-md mb-xs">NECO Practice</h3>
+            <p class="text-on-surface-variant mb-lg">
+              Comprehensive question bank for National Examination Council
+              preparations.
+            </p>
+            <div class="flex items-center gap-2 text-primary font-bold">
+              Start Session
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+          <!-- JAMB Mock Tests -->
+          <div
+            class="group bg-primary text-on-primary p-lg rounded-3xl border border-transparent shadow-lg hover:shadow-xl transition-all cursor-pointer"
+          >
+            <div
+              class="w-14 h-14 bg-primary-container/30 rounded-2xl flex items-center justify-center mb-md"
+            >
+              <span class="material-symbols-outlined text-white">timer</span>
+            </div>
+            <h3 class="font-headline-md mb-xs">JAMB Mock Tests</h3>
+            <p class="text-primary-fixed mb-lg opacity-90">
+              Timed computer-based testing (CBT) environment simulation for
+              UTME.
+            </p>
+            <div class="flex items-center gap-2 text-on-primary font-bold">
+              Continue Mock
+              <span class="material-symbols-outlined">chevron_right</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Section: Performance Insights (Bento Grid Style) -->
+      <section class="mb-xl">
+        <h2 class="font-headline-lg mb-lg">Performance Insights</h2>
+        <div class="bento-grid">
+          <!-- Score Summary Card -->
+          <div
+            class="col-span-12 md:col-span-4 bg-white rounded-3xl p-lg border border-outline-variant shadow-sm flex flex-col justify-center items-center relative overflow-hidden"
+          >
+            <div
+              class="absolute -right-10 -top-10 w-40 h-40 bg-secondary-container/20 rounded-full blur-3xl"
+            ></div>
+            <div class="text-center">
+              <p
+                class="font-label-md text-outline uppercase tracking-widest mb-4"
+              >
+                Latest Score
+              </p>
+              <div class="relative inline-block">
+                <svg class="w-48 h-48">
+                  <circle
+                    class="text-surface-container"
+                    cx="96"
+                    cy="96"
+                    fill="transparent"
+                    r="80"
+                    stroke="currentColor"
+                    stroke-width="12"
+                  ></circle>
+                  <circle
+                    class="text-secondary"
+                    cx="96"
+                    cy="96"
+                    fill="transparent"
+                    r="80"
+                    stroke="currentColor"
+                    stroke-dasharray="502.6"
+                    stroke-dashoffset="100.5"
+                    stroke-width="12"
+                  ></circle>
+                </svg>
+                <div
+                  class="absolute inset-0 flex flex-col items-center justify-center"
+                >
+                  <span
+                    class="text-display-lg font-display-lg text-on-background"
+                    >80%</span
+                  >
+                  <span class="font-bold text-secondary">GRADE A</span>
+                </div>
+              </div>
+              <p class="mt-6 text-on-surface-variant">
+                40 / 50 Correct Answers
+              </p>
+            </div>
+          </div>
+          <!-- Radar Breakdown -->
+          <div
+            class="col-span-12 md:col-span-8 bg-white rounded-3xl p-lg border border-outline-variant shadow-sm radar-chart-bg"
+          >
+            <div class="flex justify-between items-center mb-lg">
+              <h3 class="font-headline-md">Subject Proficiency</h3>
+              <div class="flex gap-2">
+                <span
+                  class="flex items-center gap-1 text-xs font-bold text-primary"
+                  ><span class="w-2 h-2 rounded-full bg-primary"></span>
+                  Current</span
+                >
+                <span
+                  class="flex items-center gap-1 text-xs font-bold text-outline"
+                  ><span class="w-2 h-2 rounded-full bg-outline"></span>
+                  Goal</span
+                >
+              </div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-lg items-center">
+              <div class="w-full md:w-1/2">
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="font-bold">Mathematics</span>
+                      <span class="text-primary font-bold">92%</span>
+                    </div>
+                    <div
+                      class="h-3 w-full bg-surface-container rounded-full overflow-hidden"
+                    >
+                      <div class="h-full bg-primary rounded-full w-[92%]"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="font-bold">Physics</span>
+                      <span class="text-primary font-bold">78%</span>
+                    </div>
+                    <div
+                      class="h-3 w-full bg-surface-container rounded-full overflow-hidden"
+                    >
+                      <div class="h-full bg-primary rounded-full w-[78%]"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="font-bold">Chemistry</span>
+                      <span class="text-primary font-bold">65%</span>
+                    </div>
+                    <div
+                      class="h-3 w-full bg-surface-container rounded-full overflow-hidden"
+                    >
+                      <div class="h-full bg-primary rounded-full w-[65%]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-1/2 flex justify-center">
+                <div
+                  class="relative w-64 h-64 border border-outline-variant rounded-full flex items-center justify-center"
+                >
+                  <div
+                    class="absolute inset-0 flex items-center justify-center opacity-20"
+                  >
+                    <span class="material-symbols-outlined text-9xl"
+                      >auto_awesome</span
+                    >
+                  </div>
+                  <div class="p-4 text-center">
+                    <p class="font-label-md text-on-surface-variant">
+                      AI Advice
+                    </p>
+                    <p class="font-body-md text-sm italic">
+                      "Focus more on Chemistry organic compounds to boost
+                      overall rank."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Topic Breakdown -->
+          <div
+            class="col-span-12 bg-surface-container-high rounded-3xl p-lg border border-outline-variant"
+          >
+            <h3 class="font-headline-md mb-lg">Detailed Topic Performance</h3>
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter"
+            >
+              <div
+                class="bg-white p-4 rounded-2xl shadow-sm border border-outline-variant"
+              >
+                <p class="text-xs font-bold text-outline mb-2">MECHANICS</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-headline-md">12/12</span>
+                  <span class="text-secondary font-bold">100%</span>
+                </div>
+              </div>
+              <div
+                class="bg-white p-4 rounded-2xl shadow-sm border border-outline-variant"
+              >
+                <p class="text-xs font-bold text-outline mb-2">WAVES</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-headline-md">08/10</span>
+                  <span class="text-secondary font-bold">80%</span>
+                </div>
+              </div>
+              <div
+                class="bg-white p-4 rounded-2xl shadow-sm border border-outline-variant"
+              >
+                <p class="text-xs font-bold text-outline mb-2">HEAT</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-headline-md">05/10</span>
+                  <span class="text-error font-bold">50%</span>
+                </div>
+              </div>
+              <div
+                class="bg-white p-4 rounded-2xl shadow-sm border border-outline-variant"
+              >
+                <p class="text-xs font-bold text-outline mb-2">ELECTRICITY</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-headline-md">15/18</span>
+                  <span class="text-secondary font-bold">83%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Bottom Navigation Bar (Mobile Only) -->
+    <footer
+      class="fixed bottom-0 w-full z-50 lg:hidden bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-16 px-2 pb-safe flex justify-around items-center"
+    >
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-variant transition-transform active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-label-sm font-label-sm">Home</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 transition-transform active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">quiz</span>
+        <span class="text-label-sm font-label-sm">Quiz</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-variant transition-transform active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">smart_toy</span>
+        <span class="text-label-sm font-label-sm">AI Tutor</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-variant transition-transform active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">cloud_download</span>
+        <span class="text-label-sm font-label-sm">Offline</span>
+      </a>
+    </footer>
+    <script>
+      // Simple countdown timer logic
+      let timeLeft = 1 * 3600 + 45 * 60 + 22; // 01:45:22 in seconds
+      const timerElement = document.getElementById("timer");
+
+      function updateTimer() {
+        const h = Math.floor(timeLeft / 3600);
+        const m = Math.floor((timeLeft % 3600) / 60);
+        const s = timeLeft % 60;
+
+        timerElement.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+
+        if (timeLeft > 0) {
+          timeLeft--;
+        } else {
+          clearInterval(timerInterval);
+          alert("Time is up! Your test has been automatically submitted.");
+        }
+      }
+
+      const timerInterval = setInterval(updateTimer, 1000);
+
+      function submitTest() {
+        if (
+          confirm(
+            "Are you sure you want to submit your test? You cannot change your answers once submitted.",
+          )
+        ) {
+          alert("Test submitted successfully. Calculating your results...");
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      // Interaction for Question Grid
+      document.querySelectorAll(".test-grid-item").forEach((button) => {
+        button.addEventListener("click", function () {
+          document
+            .querySelectorAll(".test-grid-item")
+            .forEach((btn) =>
+              btn.classList.remove(
+                "ring-4",
+                "ring-primary-container",
+                "bg-primary",
+                "text-on-primary",
+              ),
+            );
+          this.classList.add(
+            "bg-primary",
+            "text-on-primary",
+            "ring-4",
+            "ring-primary-container",
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

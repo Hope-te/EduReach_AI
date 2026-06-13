@@ -1,0 +1,702 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Offline Library - EduReach AI</title>
+    <link rel="icon" type="image/png" href="icons/logo.png" />
+    <link rel="shortcut icon" href="/icons/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/logo.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .filled-icon {
+        font-variation-settings: "FILL" 1;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c3c6d7;
+        border-radius: 10px;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+      }
+    </style>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#004ac6" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-secondary-container": "#00714d",
+              "on-tertiary-fixed-variant": "#653e00",
+              "surface-dim": "#d3daef",
+              primary: "#004ac6",
+              secondary: "#006c49",
+              "inverse-on-surface": "#edf0ff",
+              "surface-variant": "#dce2f7",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed": "#002113",
+              "surface-container-low": "#f1f3ff",
+              "error-container": "#ffdad6",
+              background: "#f9f9ff",
+              tertiary: "#784b00",
+              "surface-container": "#e9edff",
+              "secondary-container": "#6cf8bb",
+              "inverse-primary": "#b4c5ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#dce2f7",
+              "on-background": "#141b2b",
+              "on-tertiary-container": "#ffeedd",
+              "inverse-surface": "#293040",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-secondary-fixed-variant": "#005236",
+              "tertiary-fixed-dim": "#ffb95f",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#0053db",
+              surface: "#f9f9ff",
+              "tertiary-fixed": "#ffddb8",
+              error: "#ba1a1a",
+              "primary-container": "#2563eb",
+              outline: "#737686",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-primary-container": "#eeefff",
+              "on-tertiary-fixed": "#2a1700",
+              "secondary-fixed": "#6ffbbe",
+              "surface-bright": "#f9f9ff",
+              "on-error-container": "#93000a",
+              "on-surface": "#141b2b",
+              "on-surface-variant": "#434655",
+              "tertiary-container": "#996100",
+              "on-primary-fixed": "#00174b",
+              "primary-fixed": "#dbe1ff",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c3c6d7",
+              "surface-container-high": "#e1e8fd",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-desktop": "2.5rem",
+              xs: "0.5rem",
+              gutter: "1.5rem",
+              lg: "2rem",
+              md: "1.5rem",
+              base: "4px",
+              "margin-mobile": "1rem",
+              xl: "3rem",
+              sm: "1rem",
+            },
+            fontFamily: {
+              "headline-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "label-md": ["Geist"],
+              "headline-md": ["Inter"],
+              "label-sm": ["Geist"],
+              "display-lg": ["Inter"],
+              "headline-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "500",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("Service Worker Registered"));
+    }
+  </script>
+  <body class="bg-background text-on-surface font-body-md min-h-screen">
+    <!-- Top App Bar -->
+    <header
+      class="fixed top-0 w-full z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full"
+    >
+      <div class="flex items-center gap-4">
+        <div
+          class="h-10 w-10 rounded-full overflow-hidden border border-outline-variant"
+        >
+          <img
+            alt="Student Profile"
+            class="h-full w-full object-cover"
+            data-alt="A professional studio portrait of a young Nigerian female student, smiling warmly, wearing a clean school uniform. The lighting is bright and optimistic, reflecting a high-key educational setting. The background is a soft, blurred library environment with primary blue accents that match the EduReach AI brand identity."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX8F48uiz9uhHLHgg4WaSWvAAVHu3bQtMh2hjwHQshjUkygZ5YaLmAQiVx9QuMhuqr4e8hpBK3AzSVVHlIaWxCK02l8Hcs463_oDZf5qLFw0gSg0WjJ-QD45eiAY-GsUkv4NDd0qGnvCrN3zuE4RJzdb0B7xMR2UKef_pKRqCtYxQueU8A4-oGzOvYv3buQkfEw82A6yk9zxABdn2RUMIcSY7v_7rsrVYGqMFla-CmFQ74Iq3vKWZbuEZl_nx7zZ_R-5zuLbg3TBn1"
+          />
+        </div>
+        <h1
+          class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim font-bold"
+        >
+          EduReach AI
+        </h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <button
+          class="p-2 rounded-full hover:bg-surface-container transition-colors active:scale-95 duration-100"
+        >
+          <span class="material-symbols-outlined text-primary">search</span>
+        </button>
+      </div>
+    </header>
+    <!-- Side Navigation (Desktop) -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[280px] hidden lg:block bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline shadow-md dark:shadow-none z-40"
+    >
+      <div class="flex flex-col p-4 gap-2 pt-20">
+        <div class="flex flex-col mb-6 px-4">
+          <span class="font-headline-md text-primary font-bold"
+            >Offline Library</span
+          >
+          <span class="font-label-md text-on-surface-variant"
+            >Manage local content</span
+          >
+        </div>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 px-4 py-3 rounded-xl"
+          href="student_dashboard.html"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-label-md">Dashboard</span>
+        </a>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 px-4 py-3 rounded-xl"
+          href="my_courses.html"
+        >
+          <span class="material-symbols-outlined">school</span>
+          <span class="font-label-md">My Courses</span>
+        </a>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 px-4 py-3 rounded-xl"
+          href="ai_tutor.html"
+        >
+          <span class="material-symbols-outlined">auto_awesome</span>
+          <span class="font-label-md">AI Tutor</span>
+        </a>
+        <a
+          class="flex items-center gap-4 bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 border-l-4 border-primary font-bold"
+          href="offline_library.html"
+        >
+          <span class="material-symbols-outlined filled-icon"
+            >download_done</span
+          >
+          <span class="font-label-md">Offline Library</span>
+        </a>
+        <a
+          class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 px-4 py-3 rounded-xl"
+          href="settings.html"
+        >
+          <span class="material-symbols-outlined">settings</span>
+          <span class="font-label-md">Settings</span>
+        </a>
+        <div class="mt-auto pt-6 px-4 border-t border-outline-variant">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-label-sm text-on-surface-variant">Storage</span>
+            <span class="font-label-sm text-primary font-bold"
+              >4.2GB / 10GB</span
+            >
+          </div>
+          <div
+            class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden"
+          >
+            <div
+              class="bg-primary h-full rounded-full"
+              style="width: 42%"
+            ></div>
+          </div>
+          <p class="mt-4 font-label-sm text-secondary flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px] filled-icon"
+              >verified_user</span
+            >
+            Offline Mode Active
+          </p>
+        </div>
+      </div>
+    </aside>
+    <!-- Bottom Nav Bar (Mobile) -->
+    <nav
+      class="fixed bottom-0 w-full z-50 lg:hidden bg-surface border-t border-outline-variant shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-center h-16 px-2 pb-safe"
+    >
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1"
+        href="index.html"
+      >
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label-sm">Home</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1"
+        href="my_courses.html"
+      >
+        <span class="material-symbols-outlined">menu_book</span>
+        <span class="font-label-sm">Courses</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1"
+        href="ai_tutor.html"
+      >
+        <span class="material-symbols-outlined">smart_toy</span>
+        <span class="font-label-sm">AI Tutor</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1"
+        href="offline_library.html"
+      >
+        <span class="material-symbols-outlined filled-icon"
+          >cloud_download</span
+        >
+        <span class="font-label-sm">Downloads</span>
+      </a>
+    </nav>
+    <!-- Main Content -->
+    <main
+      class="lg:ml-[280px] pt-20 pb-24 lg:pb-8 px-margin-mobile md:px-margin-desktop"
+    >
+      <!-- Header Section -->
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4"
+      >
+        <div>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+            Downloaded Lessons
+          </h2>
+          <div class="flex items-center gap-3 mt-1">
+            <span class="text-secondary font-label-md flex items-center gap-1">
+              <span class="material-symbols-outlined text-[18px]">sync</span>
+              Last synced 5 mins ago
+            </span>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <button
+            class="flex items-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-xl font-label-md shadow-sm active:scale-95 transition-transform"
+          >
+            <span class="material-symbols-outlined">sync</span>
+            Sync Now
+          </button>
+        </div>
+      </div>
+      <!-- Bento Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <!-- Storage & Stats Column -->
+        <div class="md:col-span-4 flex flex-col gap-6">
+          <!-- Storage Card -->
+          <div
+            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant flex flex-col"
+          >
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="font-headline-md text-on-surface">Device Storage</h3>
+              <span class="material-symbols-outlined text-primary"
+                >data_usage</span
+              >
+            </div>
+            <div class="flex items-end gap-2 mb-2">
+              <span class="text-[40px] font-bold text-primary leading-none"
+                >4.2</span
+              >
+              <span class="text-xl font-semibold text-on-surface-variant mb-1"
+                >GB used</span
+              >
+            </div>
+            <div
+              class="w-full bg-surface-container-highest h-4 rounded-full overflow-hidden mt-4"
+            >
+              <div
+                class="bg-primary h-full rounded-full"
+                style="width: 42%"
+              ></div>
+            </div>
+            <div class="flex justify-between mt-3">
+              <span class="font-label-sm text-on-surface-variant"
+                >Used: 4.2GB</span
+              >
+              <span class="font-label-sm text-on-surface-variant"
+                >Available: 5.8GB</span
+              >
+            </div>
+            <button
+              class="mt-8 w-full py-2 border border-primary text-primary rounded-lg font-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors"
+            >
+              Clear Cache
+            </button>
+          </div>
+          <!-- Sync Status Card -->
+          <div
+            class="bg-secondary-container/30 p-6 rounded-xl border border-secondary/20 relative overflow-hidden"
+          >
+            <div class="relative z-10">
+              <h3
+                class="font-label-md text-on-secondary-container uppercase tracking-wider mb-2"
+              >
+                Network Protocol
+              </h3>
+              <p class="font-body-md text-on-surface mb-4">
+                You are currently using <b>Smart-Sync</b>. Only essential
+                updates are downloaded on mobile data.
+              </p>
+              <div class="flex items-center gap-2 text-secondary font-bold">
+                <span class="material-symbols-outlined">wifi</span>
+                <span class="font-label-md">Wi-Fi Only Enabled</span>
+              </div>
+            </div>
+            <div class="absolute -right-4 -bottom-4 opacity-10">
+              <span class="material-symbols-outlined text-[120px]"
+                >cloud_sync</span
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Content Column -->
+        <div class="md:col-span-8 flex flex-col gap-6">
+          <!-- Download Queue Management -->
+          <div
+            class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm"
+          >
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-headline-md text-on-surface">Download Queue</h3>
+              <span
+                class="px-2 py-1 bg-primary/10 text-primary rounded-md font-label-sm"
+                >2 Active</span
+              >
+            </div>
+            <div class="space-y-4">
+              <!-- Queue Item -->
+              <div
+                class="flex items-center gap-4 p-3 bg-surface-container-low rounded-lg group"
+              >
+                <div
+                  class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center text-on-primary"
+                >
+                  <span class="material-symbols-outlined">biotech</span>
+                </div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-start">
+                    <h4 class="font-label-md text-on-surface">
+                      Biology: Cellular Respiration
+                    </h4>
+                    <span class="font-label-sm text-primary">65%</span>
+                  </div>
+                  <div
+                    class="w-full bg-surface-container-highest h-1.5 rounded-full mt-2"
+                  >
+                    <div
+                      class="bg-primary h-full rounded-full"
+                      style="width: 65%"
+                    ></div>
+                  </div>
+                </div>
+                <button
+                  class="p-2 text-outline hover:text-error transition-colors"
+                >
+                  <span class="material-symbols-outlined">cancel</span>
+                </button>
+              </div>
+              <!-- Queue Item -->
+              <div
+                class="flex items-center gap-4 p-3 bg-surface-container-low rounded-lg opacity-80"
+              >
+                <div
+                  class="h-12 w-12 bg-secondary rounded-lg flex items-center justify-center text-on-secondary"
+                >
+                  <span class="material-symbols-outlined">functions</span>
+                </div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-start">
+                    <h4 class="font-label-md text-on-surface">
+                      Mathematics: Advanced Calculus
+                    </h4>
+                    <span class="font-label-sm text-on-surface-variant italic"
+                      >Waiting...</span
+                    >
+                  </div>
+                  <div
+                    class="w-full bg-surface-container-highest h-1.5 rounded-full mt-2"
+                  >
+                    <div
+                      class="bg-outline-variant h-full rounded-full w-0"
+                    ></div>
+                  </div>
+                </div>
+                <button
+                  class="p-2 text-outline hover:text-error transition-colors"
+                >
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Filter/Tabs -->
+          <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            <button
+              class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-sm whitespace-nowrap"
+            >
+              All Lessons (12)
+            </button>
+            <button
+              class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-sm whitespace-nowrap"
+            >
+              Science
+            </button>
+            <button
+              class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-sm whitespace-nowrap"
+            >
+              Humanities
+            </button>
+            <button
+              class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-sm whitespace-nowrap"
+            >
+              Mathematics
+            </button>
+          </div>
+          <!-- Lessons List -->
+          <div class="flex flex-col gap-4">
+            <!-- Lesson Item with Update Available -->
+            <div
+              class="bg-white border border-outline-variant rounded-xl p-4 flex flex-col md:flex-row md:items-center gap-4 hover:shadow-md transition-all group"
+            >
+              <div
+                class="h-16 w-16 bg-tertiary-fixed text-on-tertiary-fixed rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <span class="material-symbols-outlined text-3xl"
+                  >history_edu</span
+                >
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <h4 class="font-headline-md text-on-surface text-lg">
+                    History: Pre-Colonial Africa
+                  </h4>
+                  <span
+                    class="inline-flex items-center gap-1 px-2 py-0.5 bg-error-container text-on-error-container text-[10px] rounded-full font-bold uppercase tracking-tighter"
+                  >
+                    <span
+                      class="material-symbols-outlined text-[12px] filled-icon"
+                      >error</span
+                    >
+                    Update Available
+                  </span>
+                </div>
+                <p class="font-label-sm text-on-surface-variant">
+                  Size: 450MB • Last viewed: 2 days ago
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-lg font-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >update</span
+                  >
+                  Update
+                </button>
+                <button class="p-2 text-outline hover:text-on-surface">
+                  <span class="material-symbols-outlined">more_vert</span>
+                </button>
+              </div>
+            </div>
+            <!-- Regular Lesson Item -->
+            <div
+              class="bg-white border border-outline-variant rounded-xl p-4 flex flex-col md:flex-row md:items-center gap-4 hover:shadow-md transition-all"
+            >
+              <div
+                class="h-16 w-16 bg-secondary-fixed text-on-secondary-fixed rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <span class="material-symbols-outlined text-3xl">language</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline-md text-on-surface text-lg mb-1">
+                  Geography: Tectonic Plates
+                </h4>
+                <p class="font-label-sm text-on-surface-variant">
+                  Size: 1.2GB • Last viewed: Yesterday
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-lg font-label-sm hover:bg-primary transition-colors hover:text-white"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >play_circle</span
+                  >
+                  Resume
+                </button>
+                <button class="p-2 text-outline hover:text-on-surface">
+                  <span class="material-symbols-outlined">more_vert</span>
+                </button>
+              </div>
+            </div>
+            <!-- Regular Lesson Item -->
+            <div
+              class="bg-white border border-outline-variant rounded-xl p-4 flex flex-col md:flex-row md:items-center gap-4 hover:shadow-md transition-all"
+            >
+              <div
+                class="h-16 w-16 bg-primary-fixed text-on-primary-fixed rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <span class="material-symbols-outlined text-3xl"
+                  >psychology</span
+                >
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline-md text-on-surface text-lg mb-1">
+                  Philosophy: Logic &amp; Ethics
+                </h4>
+                <p class="font-label-sm text-on-surface-variant">
+                  Size: 820MB • Last viewed: 1 week ago
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-lg font-label-sm hover:bg-primary transition-colors hover:text-white"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >play_circle</span
+                  >
+                  Resume
+                </button>
+                <button class="p-2 text-outline hover:text-on-surface">
+                  <span class="material-symbols-outlined">more_vert</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Success Toast Notification (Hidden by default) -->
+    <div
+      class="fixed bottom-24 right-8 lg:bottom-8 lg:right-8 bg-inverse-surface text-inverse-on-surface px-6 py-4 rounded-xl shadow-xl flex items-center gap-4 translate-y-32 opacity-0 transition-all duration-500 z-[100]"
+      id="sync-toast"
+    >
+      <span class="material-symbols-outlined text-secondary-fixed-dim"
+        >check_circle</span
+      >
+      <div class="flex flex-col">
+        <span class="font-label-md font-bold">Sync Complete</span>
+        <span class="text-xs opacity-80">All lessons are now up to date.</span>
+      </div>
+      <button
+        class="ml-4 text-on-surface-variant hover:text-white"
+        onclick="hideToast()"
+      >
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    <script>
+      function showToast() {
+        const toast = document.getElementById("sync-toast");
+        toast.classList.remove("translate-y-32", "opacity-0");
+        setTimeout(() => {
+          hideToast();
+        }, 5000);
+      }
+
+      function hideToast() {
+        const toast = document.getElementById("sync-toast");
+        toast.classList.add("translate-y-32", "opacity-0");
+      }
+
+      // Simulate sync micro-interaction
+      document
+        .querySelector("button.bg-primary")
+        .addEventListener("click", function () {
+          const btn = this;
+          const originalContent = btn.innerHTML;
+          btn.innerHTML =
+            '<span class="material-symbols-outlined animate-spin">sync</span> Syncing...';
+          btn.disabled = true;
+
+          setTimeout(() => {
+            btn.innerHTML = originalContent;
+            btn.disabled = false;
+            showToast();
+          }, 2500);
+        });
+
+      // Add visual feedback to list items
+      const listItems = document.querySelectorAll(".group");
+      listItems.forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          item.style.transform = "translateY(-2px)";
+        });
+        item.addEventListener("mouseleave", () => {
+          item.style.transform = "translateY(0)";
+        });
+      });
+    </script>
+  </body>
+</html>
